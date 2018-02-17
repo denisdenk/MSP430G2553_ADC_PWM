@@ -21,12 +21,12 @@ void main(void)
 		BCSCTL1 = CALBC1_1MHZ;			// Set range   DCOCTL = CALDCO_1MHZ;
 		BCSCTL2 &= ~(DIVS_3);			// SMCLK = DCO = 1MHz
 
-		P1SEL |= BIT3;					// Вход АЦП P1.3
-		P1DIR |= BIT2;					// P1.2 на выход
+		P1SEL |= BIT3;				// Вход АЦП P1.3
+		P1DIR |= BIT2;				// P1.2 на выход
 		P1SEL |= BIT2;            		// P1.2 to TA0.1
 
-		ConfigureADC();					// Инициализация АЦП
-		ConfigurePWM();					// инициализация PWM
+		ConfigureADC();				// Инициализация АЦП
+		ConfigurePWM();				// инициализация PWM
 
 		__enable_interrupt();			// Активация прерываний
 
@@ -47,15 +47,15 @@ void main(void)
 #pragma vector=ADC10_VECTOR
 __interrupt void ADC10_ISR (void)
 {
-	__bic_SR_register_on_exit(CPUOFF);        // Return to active mode }
+	__bic_SR_register_on_exit(CPUOFF);        // Return to active mode 
 }
 
 /* Инициализация АЦП */
 void ConfigureADC(void)
 {
-	ADC10CTL1 = INCH_3 + ADC10DIV_3 ;         // Channel 3, ADC10CLK/3
-	ADC10CTL0 = SREF_0 + ADC10SHT_3 + ADC10ON + ADC10IE;  // Vcc & Vss as reference, Sample and hold for 64 Clock cycles, ADC on, ADC interrupt enable
-	ADC10AE0 |= BIT3;                         // ADC input enable P1.3
+	ADC10CTL1 = INCH_3 + ADC10DIV_3 ;         		// Channel 3, ADC10CLK/3
+	ADC10CTL0 = SREF_0 + ADC10SHT_3 + ADC10ON + ADC10IE;  	// Vcc & Vss as reference, Sample and hold for 64 Clock cycles, ADC on, ADC interrupt enable
+	ADC10AE0 |= BIT3;                         		// ADC input enable P1.3
 }
 /* Инициализация ШИМ */
 void ConfigurePWM(void)
@@ -70,5 +70,4 @@ long map(long x, long in_min, long in_max, long out_min, long out_max)
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-// Я офигенный комментарий!
 
